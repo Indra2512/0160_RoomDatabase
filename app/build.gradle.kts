@@ -7,9 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.dbroom1"
-    compileSdk {
-        version = release(37)
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.dbroom1"
@@ -35,6 +33,10 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+kotlin {
+    jvmToolchain(11)
 }
 
 dependencies {
