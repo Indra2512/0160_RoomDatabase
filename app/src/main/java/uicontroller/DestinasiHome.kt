@@ -1,0 +1,4 @@
+package uicontroller
+
+object DestinasiHome {
+}

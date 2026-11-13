@@ -1,0 +1,4 @@
+package uicontroller
+
+interface DestinasiNavigasi {
+}
