@@ -13,13 +13,14 @@ class DetailViewModel(
 ) : ViewModel() {
     private val idSiswa: Int = checkNotNull(savedStateHandle[DestinasiDetailSiswa.itemIdArg])
 
+    val uiDetailState: StateFlow<DetailSiswaUiState> =
+        repositoriSiswa.getSiswaStream(idSiswa)
+            .fillterNotNull()
+            .map {
+                DetailSiswaUiState(datailSiswa = it.toDetailSiswa())
+            }. stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = DetailsSiswaUiState()
+            )
 
-}
-
-
-
-class DetailViewModel (
-    suspend fun deleteSiswa(){
-        repositoriSiswa.deleteSiswa(uiDetailState.value.detailSiswa.toSiswa())
-    }
-)
