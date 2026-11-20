@@ -5,7 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import repositori.RepositoriSiswa
+import room.Siswa
+import viewmodel.DetailsSiswa
 
 class DetailViewModel(
     savedStateHandle: SavedStateHandle,
@@ -15,7 +20,7 @@ class DetailViewModel(
 
     val uiDetailState: StateFlow<DetailSiswaUiState> =
         repositoriSiswa.getSiswaStream(idSiswa)
-            .fillterNotNull()
+            .filterNotNull()
             .map {
                 DetailSiswaUiState(datailSiswa = it.toDetailSiswa())
             }. stateIn(
@@ -24,17 +29,19 @@ class DetailViewModel(
                 initialValue = DetailsSiswaUiState()
             )
 
-    suspend fun deleteSiswa() {
+    suspend fun deleteSiswa(toSiswa: Any.() -> Siswa) {
         repositoriSiswa.deleteSiswa(uiDetailState.value.detailSiswa.toSiswa())
     }
 
-    companion object
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
+    }
 }
 
-
-
-class DetailViewModel (
-    suspend fun deleteSiswa(){
-    repositoriSiswa.deleteSiswa(uiDetailState.value.detailSiswa.toSiswa())
-}
+/**
+ * UI state untuk ItemDetailScreen
+ */
+data class DetailSiswaUiState(
+    val detailsSiswa: DetailsSiswa = DetailsSiswa(),
+    val detailSiswa: Any
 )
