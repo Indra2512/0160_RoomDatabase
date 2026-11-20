@@ -39,4 +39,8 @@ class EditViewModel(
             repositoriSiswa.updateSiswa(uiStateSiswa.detailSiswa.toSiswa())
         }
     }
+
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
+    }
 }
