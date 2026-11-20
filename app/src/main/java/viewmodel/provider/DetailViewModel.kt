@@ -24,3 +24,17 @@ class DetailViewModel(
                 initialValue = DetailsSiswaUiState()
             )
 
+    suspend fun deleteSiswa() {
+        repositoriSiswa.deleteSiswa(uiDetailState.value.detailSiswa.toSiswa())
+    }
+
+    companion object
+}
+
+
+
+class DetailViewModel (
+    suspend fun deleteSiswa(){
+    repositoriSiswa.deleteSiswa(uiDetailState.value.detailSiswa.toSiswa())
+}
+)
